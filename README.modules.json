@@ -1,0 +1,64 @@
+{
+  "module": {
+    "id": "beat-synced-animated-covers",
+    "name": "Beat Synced Animated Covers",
+    "version": "2.0.0",
+    "author": "custom",
+    "type": "engine",
+    "enabled": true,
+    "description": "Audio-reactive animated album covers that respond to beat, bass, and intensity"
+  },
+  "engine": {
+    "audioReactive": {
+      "enabled": true,
+      "input": "system_audio",
+      "sensitivity": 1.2,
+      "smoothing": 0.65
+    },
+    "analysis": {
+      "beatDetection": true,
+      "bpmSync": true,
+      "frequencyBands": {
+        "bass": { "range": [20, 250], "weight": 1.4 },
+        "mid": { "range": [250, 4000], "weight": 1.0 },
+        "treble": { "range": [4000, 16000], "weight": 0.8 }
+      }
+    },
+    "ui": {
+      "cover": {
+        "animation": {
+          "style": "beatPulse",
+          "syncMode": "bpm_locked",
+          "reactiveScale": {
+            "min": 1.0,
+            "max": 1.25,
+            "source": "bass"
+          },
+          "rotation": {
+            "enabled": true,
+            "source": "bpm",
+            "degreesPerBeat": 6
+          },
+          "glow": {
+            "enabled": true,
+            "intensitySource": "bass",
+            "maxGlow": 25
+          }
+        },
+        "visuals": {
+          "rounded": 22,
+          "shadow": true,
+          "blurBackground": true,
+          "parallax": true
+        }
+      }
+    },
+    "performance": {
+      "fpsCap": 60,
+      "lowPowerMode": {
+        "enabled": true,
+        "reduceEffectsOnBattery": true
+      }
+    }
+  }
+}
